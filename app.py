@@ -7,10 +7,14 @@ def add_numbers(a, b):
 
 @app.route("/")
 def home():
-    return jsonify({
-        "status": "ok",
-        "message": "Use /add?a=2&b=3 to add two numbers"
-    })
+    return """
+    <h2>Add Two Numbers</h2>
+    <form action="/add" method="get">
+        <input type="number" name="a" placeholder="Enter first number" required><br><br>
+        <input type="number" name="b" placeholder="Enter second number" required><br><br>
+        <button type="submit">Calculate</button>
+    </form>
+    """
 
 @app.route("/add")
 def add():
@@ -18,19 +22,15 @@ def add():
     b = request.args.get("b", type=float)
 
     if a is None or b is None:
-        return jsonify({
-            "status": "error",
-            "message": "Please provide two numbers in the URL like /add?a=2&b=3"
-        }), 400
+        return "Please enter two numbers"
 
     result = add_numbers(a, b)
 
-    return jsonify({
-        "status": "ok",
-        "a": a,
-        "b": b,
-        "result": result
-    })
+    return f"""
+    <h2>Result</h2>
+    <p>{a} + {b} = {result}</p>
+    <a href="/">Back</a>
+    """
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=8080)
