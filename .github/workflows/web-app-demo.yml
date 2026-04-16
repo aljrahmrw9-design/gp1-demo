@@ -27,7 +27,7 @@ jobs:
         run: pytest -v --disable-warnings
 
       - name: Run Security Scan (Bandit)
-       run: bandit -r . -s B101,B104
+        run: bandit -r . -s B101,B104
 
   docker-deploy:
     runs-on: ubuntu-latest
